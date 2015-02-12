@@ -51,10 +51,10 @@ class PushId
             // NOTE: Can't use << here because javascript will convert to int and lose the upper bits.
             $now = floor($now / 64);
         }
-        
+
         static::assert($now === 0, 'We should have converted the entire timestamp.');
 
-        $id = implode('', $timeStampChars);
+        $id = implode('', $timeStampChars->toArray());
 
         if (!$isDuplicateTime) {
             for ($i = 0; $i < 12; $i++) {
@@ -70,7 +70,7 @@ class PushId
         for ($i = 0; $i < 12; $i++) {
             $id .= substr(self::PUSH_CHARS, $lastRandChars[$i], 1);
         }
-        
+
         static::assert(strlen($id) === 20, 'Length should be 20.');
 
         return $id;
